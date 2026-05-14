@@ -5,8 +5,9 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f8;
-  color: #1f2937;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .app {
@@ -16,12 +17,24 @@ body {
 }
 
 /* --- Header Section --- */
+.app-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
 .header {
   background: #111827;
   color: white;
   padding: 24px;
   border-radius: 16px;
-  margin-bottom: 20px;
+  flex: 1;
+}
+
+:root.dark-mode .header {
+  background: #0f1419;
 }
 
 .header h1 {
@@ -32,6 +45,39 @@ body {
   margin: 0;
 }
 
+/* --- Theme Toggle Button --- */
+.theme-toggle {
+  background: var(--accent-bg);
+  border: 2px solid var(--accent-border);
+  color: var(--accent);
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  min-width: 56px;
+  margin-top: 12px;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background: var(--accent);
+  color: white;
+}
+
+.theme-icon {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:active .theme-icon {
+  transform: rotate(20deg);
+}
+
 /* --- Summary Stats --- */
 .summary {
   display: flex;
@@ -40,15 +86,57 @@ body {
 }
 
 .summary p {
-  background: white;
+  background: var(--bg);
+  border: 1px solid var(--border);
   padding: 12px 16px;
   border-radius: 12px;
   font-weight: bold;
+  color: var(--text);
+}
+
+/* --- Teacher Filter --- */
+.teacher-filter {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.teacher-filter label {
+  font-weight: bold;
+  color: var(--text);
+  margin: 0;
+}
+
+.teacher-filter select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.teacher-filter select:hover {
+  border-color: var(--accent);
+}
+
+.teacher-filter select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 /* --- Search Bar --- */
 .search-container {
-  background: white;
+  background: var(--bg);
+  border: 1px solid var(--border);
   padding: 16px;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -58,14 +146,24 @@ body {
   display: block;
   font-weight: bold;
   margin-bottom: 8px;
+  color: var(--text);
 }
 
 .search-container input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 16px;
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color 0.3s ease;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 /* --- Grid de Cursos --- */
@@ -76,26 +174,35 @@ body {
 }
 
 .course-card {
-  background: white;
+  background: var(--bg);
+  border: 1px solid var(--border);
   padding: 18px;
   border-radius: 14px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
 }
 
 .course-card h2 {
   font-size: 18px;
   margin-top: 0;
   text-transform: capitalize;
+  color: var(--text-h);
 }
 
 .course-card p {
   line-height: 1.5;
+  color: var(--text);
 }
 
 .course-card small {
   display: block;
   margin-bottom: 12px;
-  color: #475569;
+  color: var(--text);
+  opacity: 0.8;
 }
 
 /* --- Botones --- */
@@ -108,7 +215,7 @@ body {
   color: white;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s ease; /* Pequeño toque extra para suavidad */
+  transition: background 0.3s ease;
 }
 
 .btn:hover {
@@ -125,24 +232,35 @@ body {
 
 /* --- Mensajes y Errores --- */
 .message {
-  background: white;
+  background: var(--bg);
+  border: 1px solid var(--border);
   padding: 16px;
   border-radius: 12px;
+  color: var(--text);
 }
 
 .error {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--accent-bg);
+  color: var(--accent);
   padding: 16px;
   border-radius: 12px;
   margin-bottom: 20px;
+  border: 1px solid var(--accent-border);
 }
 
 .error button {
   padding: 8px 12px;
-  border: none;
-  background: #991b1b;
-  color: white;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.error button:hover {
+  background: var(--accent);
+  color: white;
 }
